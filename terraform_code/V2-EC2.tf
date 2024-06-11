@@ -3,12 +3,12 @@ provider "aws" {
 }
 
 resource "aws_instance" "demo-server" {
-  ami                    = "ami-ami-04b70fa74e45c3917"
+  ami                    = "ami-04b70fa74e45c3917"
   instance_type          = "t2.micro"
   key_name               = "dpp"
   vpc_security_group_ids = [aws_security_group.demo-sg.id]
   subnet_id              = aws_subnet.dpp_subnet_01.id
-  for_each = toset("Jenkins-master", "build-slave", "ansible")
+  for_each               = toset(["Jenkins-master", "build-slave", "ansible"])
   tags = {
     Name = "${each.key}"
   }
@@ -21,6 +21,13 @@ resource "aws_security_group" "demo-sg" {
   ingress {
     from_port   = 22
     to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 8080
+    to_port     = 8080
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }

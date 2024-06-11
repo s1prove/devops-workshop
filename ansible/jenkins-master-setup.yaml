@@ -1,5 +1,5 @@
 ---
-- host: jenkins-master
+- hosts: jenkins-master
   become: true
   tasks:
     - name: add jenkins key
@@ -9,12 +9,12 @@
 
     - name: add jenkins repo
       apt_repository:
-        repo: 'deb https://pkg.jenkins.io/debian-stable'
+        repo: deb https://pkg.jenkins.io/debian-stable binary/
         state: present
 
     - name: install java
       apt: 
-        name: openjdk-11-jre
+        name: openjdk-17-jre
         state: present
     
     - name: install jenkins
