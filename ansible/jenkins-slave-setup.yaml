@@ -33,3 +33,9 @@
         name: docker
         state: started
         enbled: yes
+
+    - name: give full permission to docker sock file
+      file:
+        path: /var/run/docker.sock
+        state: file
+        mode: 0777
