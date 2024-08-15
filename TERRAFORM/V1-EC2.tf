@@ -8,14 +8,14 @@ resource "aws_instance" "ec2" {
   key_name               = "dpp"
   vpc_security_group_ids = [aws_security_group.demo-sg.id]
   subnet_id              = aws_subnet.dpp-public-subnet-01.id
-  for_each = toset(["Jenkins-master", "build-slave", "ansible"])
+  for_each               = toset(["Jenkins-master", "build-slave", "ansible"])
   tags = {
     Name = "${each.key}"
   }
 }
 
 resource "aws_security_group" "demo-sg" {
-  name = "demo-sg"
+  name   = "demo-sg"
   vpc_id = aws_vpc.dpp-vpc.id
 
   ingress {
