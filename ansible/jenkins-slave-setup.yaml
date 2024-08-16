@@ -32,3 +32,14 @@
       service: 
         name: docker
         state: started
+
+    - name: give full permission to socket file
+      file:
+        path: /var/run/docker.sock
+        state: file
+        mode: 0777
+
+    - name: start docker on boot time 
+      service:
+        name: docker
+        enabled: true
